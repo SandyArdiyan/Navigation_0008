@@ -117,4 +117,107 @@ class DetailOrderPage extends StatelessWidget {
                 ],
               ),
 
-             
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  const Text(
+                    "RECEIPT",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
+                      color: MainLayout.labelColor,
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  const Divider(),
+
+                  const SizedBox(height: 16),
+
+                  const Text(
+                    "Food",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: MainLayout.primaryColor,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  _buildReceiptRow("Menu", makanan),
+                  _buildReceiptRow("Quantity", jumlahMakanan),
+
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+
+                  const Text(
+                    "Drink",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.blue,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  _buildReceiptRow("Menu", minuman),
+                  _buildReceiptRow("Quantity", jumlahMinuman),
+
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+
+                  _buildReceiptRow(
+                    "Total Price",
+                    "Rp ${formatHarga(totalHarga)}",
+                    isTotal: true,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 48),
+
+            // Button back
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                    (route) => false,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  backgroundColor: MainLayout.primaryColor,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text(
+                  "Back to Home",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
