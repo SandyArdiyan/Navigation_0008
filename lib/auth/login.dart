@@ -123,4 +123,39 @@ class _LoginPageState extends State<LoginPage> {
 
                     const SizedBox(height: 20),
 
-                   
+                    /// PASSWORD
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        labelText: "Password",
+                        prefixIcon: Icon(
+                          Icons.lock_outline,
+                          color: MainLayout.primaryColor,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: MainLayout.primaryColor),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(
+                            color: MainLayout.primaryColor,
+                            width: 2,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: MainLayout.inputFillColor,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your password";
+                        }
+                        if (value.length < 6) {
+                          return "Password must be at least 6 characters";
+                        }
+                        return null;
+                      },
+                    ),
+
+                
