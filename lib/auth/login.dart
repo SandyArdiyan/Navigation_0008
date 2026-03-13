@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:navigasi/main_layout.dart';
+import 'package:navigasi/page/main_layout.dart';
 import 'package:navigasi/mainui/home.dart';
 import 'package:navigasi/auth/register.dart';
 

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:navigasi/main_layout.dart';
+import 'package:navigasi/page/main_layout.dart';
 import '../page/order_page.dart';
 
 class HomePage extends StatefulWidget {
