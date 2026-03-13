@@ -214,4 +214,48 @@ class _LoginPageState extends State<LoginPage> {
 
                     const SizedBox(height: 24),
 
-                   
+                    /// REGISTER
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+
+                        const Text(
+                          "Don't have an account?",
+                          style: TextStyle(
+                            color: MainLayout.textSubtitleColor,
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegisterPage(
+                                showLoginPage: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            " Sign Up",
+                            style: TextStyle(
+                              color: MainLayout.accentYellow,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
