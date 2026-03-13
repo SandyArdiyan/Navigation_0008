@@ -48,4 +48,46 @@ class DetailOrderPage extends StatelessWidget {
     );
   }
 
-  
+  String formatHarga(int harga) {
+    return harga.toString().replaceAllMapped(
+      RegExp(r'\B(?=(\d{3})+(?!\d))'),
+      (match) => '.',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MainLayout(
+      title: "Order Summary",
+      showAppBar: true,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+
+            // Icon sukses
+            Container(
+              padding: const EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                color: Colors.green.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.check_circle_rounded,
+                color: Colors.green,
+                size: 80,
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            const Text(
+              "Order Successful!",
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: MainLayout.textTitleColor,
+              ),
+            ),
+
+         
