@@ -10,11 +10,12 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-  final user = FirebaseAuth.instance.currentUser!;
+  // Gunakan getter agar tidak error saat inisialisasi awal
+  User? get currentUser => FirebaseAuth.instance.currentUser;
   List<String> docIDs = [];
 
-  // Perbaikan 1: Pastikan fungsi mengembalikan Future agar FutureBuilder bekerja
-  Future getDocId() async {
+  // Tambahkan return type Future agar FutureBuilder bekerja
+  Future<List<String>> getDocId() async {
     docIDs.clear();
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -24,23 +25,28 @@ class _OrderPageState extends State<OrderPage> {
     for (var document in snapshot.docs) {
       docIDs.add(document.reference.id);
     }
-    return docIDs; // Tambahkan return di sini
+    return docIDs; // Mengembalikan list agar snapshot.hasData menjadi true
   }
 
   @override
   Widget build(BuildContext context) {
+    // Cek jika user belum login
+    if (currentUser == null) {
+      return const Scaffold(body: Center(child: Text("Silahkan login kembali")));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          user.email ?? "User",
+          currentUser!.email ?? "User",
           style: const TextStyle(fontSize: 16),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushReplacementNamed(context, '/login'); // Arahkan kembali ke login
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              if (mounted) Navigator.pushReplacementNamed(context, '/login');
             },
           )
         ],
@@ -49,33 +55,27 @@ class _OrderPageState extends State<OrderPage> {
         future: getDocId(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
-            return const Center(
-              child: Text("Something went wrong"),
-            );
+            return const Center(child: Text("Terjadi kesalahan pengambilan data"));
           }
 
           if (docIDs.isEmpty) {
-            return const Center(
-              child: Text("No users found"),
-            );
+            return const Center(child: Text("Tidak ada data pengguna"));
           }
 
           return ListView.builder(
             itemCount: docIDs.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: ListTile(
                   tileColor: Colors.grey[200],
                   leading: const Icon(Icons.person),
-                  // Perbaikan 2: Tampilkan ID dokumen sebagai contoh
-                  title: Text("User ID: ${docIDs[index]}"), 
+                  title: Text("User ID: ${docIDs[index]}"),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 ),
               );
             },

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart'; // Tambahkan ini
 import 'package:navigasi/auth/login.dart';
 import 'package:navigasi/mainui/home.dart';
 import 'package:navigasi/page/order_page.dart';
 
-void main() {
+Future<void> main() async {
+  // Wajib ditambahkan untuk inisialisasi asinkron
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Inisialisasi Firebase
+  await Firebase.initializeApp();
+  
   runApp(const MyApp());
 }
 
