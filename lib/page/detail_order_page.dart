@@ -90,4 +90,31 @@ class DetailOrderPage extends StatelessWidget {
               ),
             ),
 
-         
+            const SizedBox(height: 8),
+
+            const Text(
+              "Here are your order details",
+              style: TextStyle(
+                fontSize: 16,
+                color: MainLayout.textSubtitleColor,
+              ),
+            ),
+
+            const SizedBox(height: 40),
+
+            // Receipt
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+
+             
