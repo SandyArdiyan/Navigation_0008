@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
 
@@ -11,13 +10,12 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
-
   final user = FirebaseAuth.instance.currentUser!;
   List<String> docIDs = [];
 
-  Future<void> getDocId() async {
+  // Perbaikan 1: Pastikan fungsi mengembalikan Future agar FutureBuilder bekerja
+  Future getDocId() async {
     docIDs.clear();
-
     final snapshot = await FirebaseFirestore.instance
         .collection('users')
         .orderBy('age', descending: true)
@@ -26,11 +24,11 @@ class _OrderPageState extends State<OrderPage> {
     for (var document in snapshot.docs) {
       docIDs.add(document.reference.id);
     }
+    return docIDs; // Tambahkan return di sini
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -42,45 +40,42 @@ class _OrderPageState extends State<OrderPage> {
             icon: const Icon(Icons.logout),
             onPressed: () {
               FirebaseAuth.instance.signOut();
+              Navigator.pushReplacementNamed(context, '/login'); // Arahkan kembali ke login
             },
           )
         ],
       ),
-
       body: FutureBuilder(
         future: getDocId(),
         builder: (context, snapshot) {
-
-          // loading
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          // error
           if (snapshot.hasError) {
             return const Center(
               child: Text("Something went wrong"),
             );
           }
 
-          // no data
           if (docIDs.isEmpty) {
             return const Center(
               child: Text("No users found"),
             );
           }
 
-          // data loaded
           return ListView.builder(
             itemCount: docIDs.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: ListTile(
                   tileColor: Colors.grey[200],
                   leading: const Icon(Icons.person),
+                  // Perbaikan 2: Tampilkan ID dokumen sebagai contoh
+                  title: Text("User ID: ${docIDs[index]}"), 
                 ),
               );
             },
