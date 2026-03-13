@@ -100,4 +100,28 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(height: 25),
 
-        
+          // Top Menu
+          const Text(
+            "Top Menu",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+
+          const SizedBox(height: 10),
+
+          Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              leading: const Icon(Icons.restaurant, color: Colors.orange),
+              title: const Text("Start New Order"),
+              subtitle: const Text("Browse our delicious menu"),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                _navigateBottomBar(1);
+              },
+            ),
+          ),
+
+          const SizedBox(height: 25),
+
+          
