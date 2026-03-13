@@ -124,4 +124,131 @@ class _HomePageState extends State<HomePage> {
 
           const SizedBox(height: 25),
 
-          
+          // Recent Activity
+          const Text(
+            "Recent Activity",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+
+          const SizedBox(height: 10),
+
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                )
+              ],
+            ),
+            child: Column(
+              children: const [
+
+                Row(
+                  children: [
+                    Icon(Icons.check_circle, color: Colors.green),
+                    SizedBox(width: 8),
+                    Text(
+                      "Order Successful",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+
+                Divider(),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Food:\nMagelangan"),
+                    Text("x5")
+                  ],
+                ),
+
+                SizedBox(height: 10),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Drink:\nEs Teh"),
+                    Text("x10")
+                  ],
+                ),
+
+                Divider(),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Paid",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Rp 210.000",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    final List<Widget> pages = [
+      _buildHomeContent(),
+      const OrderPage(),
+      const Center(child: Text("Profile Page")),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Home",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: MainLayout.primaryColor,
+        centerTitle: true,
+      ),
+      body: pages[_selectedIndex],
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _navigateBottomBar,
+        selectedItemColor: MainLayout.primaryColor,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt),
+            label: 'Order',
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
+  }
+}
